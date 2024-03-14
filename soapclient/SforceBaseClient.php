@@ -980,20 +980,15 @@ class QueryResult implements Iterator{
 
 	// Basic Iterator implementation functions
 	#[\ReturnTypeWillChange]
-	public function next() { ++$this->pointer; }		public function rewind(): mixed { $this->pointer = 0; }
-	public function key() { return $this->pointer; }		#[\ReturnTypeWillChange]
-	public function current() { return new SObject($this->records[$this->pointer]); }		public function next(): mixed { ++$this->pointer; }
-
+	public function rewind(): mixed { $this->pointer = 0; }
 	#[\ReturnTypeWillChange]
-	public function valid() {		public function key(): mixed { return $this->pointer; }
+	public function next(): mixed { ++$this->pointer; }
+	#[\ReturnTypeWillChange]
+	public function key(): mixed { return $this->pointer; }
 	#[\ReturnTypeWillChange]
 	public function current(): mixed { return new SObject($this->records[$this->pointer]); }
-
 	#[\ReturnTypeWillChange]
 	public function valid(): mixed {
- 		while ($this->pointer >= count($this->records)) {
- 			// Pointer is larger than (current) result set; see if we can fetch more
- 			if ($this->done === false) {
 		while ($this->pointer >= count($this->records)) {
 			// Pointer is larger than (current) result set; see if we can fetch more
 			if ($this->done === false) {
